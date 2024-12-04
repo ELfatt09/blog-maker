@@ -1,26 +1,22 @@
 <?php
-
-/**
- * This file contains functions for managing blog posts.
- */
 require_once '../database/connection.php';
 
 /**
- * Returns all blog posts of the given type.
+ * Gets all blog posts of a type.
  *
- * @param string $type The type of blog posts to return.
+ * @param string $type The type of blog posts to get.
  * @return array An associative array of blog posts.
  */
-function all(string $type = null)
+function all($type = null)
 {
     $query = buildSelectQuery($type);
     return fetchAllResults($query);
 }
 
 /**
- * Returns a blog post with the given id.
+ * Gets a blog post.
  *
- * @param int $id The id of the blog post to return.
+ * @param int $id The id of the blog post to get.
  * @return array An associative array of a blog post.
  */
 function show($id)
@@ -33,7 +29,7 @@ function show($id)
 }
 
 /**
- * Creates a new blog post with the given data.
+ * Creates a new blog post.
  *
  * @param array $data The data to create a blog post with.
  */
@@ -45,7 +41,7 @@ function create(array $data)
 }
 
 /**
- * Updates an existing blog post with the given data.
+ * Updates an existing blog post.
  *
  * @param array $data The data to update the blog post with.
  * @param int $id The id of the blog post to update.
@@ -64,7 +60,7 @@ function update($data, $id)
 }
 
 /**
- * Deletes a blog post with the given id.
+ * Deletes a blog post.
  *
  * @param int $id The id of the blog post to delete.
  */

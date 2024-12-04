@@ -218,7 +218,11 @@ function deleteOldHeaderImage($id)
 function getHeaderImgPath(array $image)
 {
     $header_img_path = $image['image']['tmp_name'];
-    $destination_path = '../storage/' . time() . basename($image['image']['name']);
+    $storage_dir = '../storage/';
+    if (!file_exists($storage_dir)) {
+        mkdir($storage_dir, 0777, true);
+    }
+    $destination_path = $storage_dir . time() . basename($image['image']['name']);
     move_uploaded_file($header_img_path, $destination_path);
     return $destination_path;
 }

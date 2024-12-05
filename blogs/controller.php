@@ -72,9 +72,8 @@ function delete($id)
     $query = "DELETE FROM blog WHERE id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", escape($id));
-    if ($stmt->execute()) {
-        deleteOldHeaderImage($id);
-    }
+    deleteOldHeaderImage($id);
+    $stmt->execute(); 
     redirectToIndex();
 }
 
@@ -147,7 +146,7 @@ function sendForbiddenResponse()
 function deleteOldHeaderImage($id)
 {
     $header_img_path = getHeaderImgPathById($id);
-    if (!empty($header_img_path) && file_exists($header_img_path)) {
+    if (!empty($header_img_path) || file_exists($header_img_path)) {
         unlink($header_img_path);
     }
 }

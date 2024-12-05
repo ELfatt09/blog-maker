@@ -9,18 +9,29 @@ function register($data)
     $username = mysqli_real_escape_string($conn, $data['username']);
     $password = password_hash(mysqli_real_escape_string($conn, $data['password']), PASSWORD_DEFAULT);
 
-    $checkQuery = "SELECT * FROM accounts WHERE username = '$username'";
+    $checkQuery = "SELECT * FROM accounts WHERE username = ?";
 
-    if ($conn->query($checkQuery)->num_rows) {
-        return "Username already exists";
-    } else {
-        $query = "INSERT INTO accounts (username, password) VALUES ('$username', '$password')";
+    if ($stmt = $conn->prepare($checkQuery)) {
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($id, $username, $password, $is_admin);
 
-        if ($conn->query($query)) {
-            header("Location: ../auth/login.php");
+        if ($stmt->num_rows) {
+            echo "<script>alert('Username already exists');</script>";
         } else {
-            return "Error registering user";
+
+            $query = "INSERT INTO accounts (username, password) VALUES (?, ?)";
+
+            if ($stmt = $conn->prepare($query)) {
+                $stmt->bind_param("ss", $username, $password);
+                $stmt->execute();
+                header("Location: ../auth/login.php");
+            } else {
+                echo "<script>alert('Error registering user');</script>";
+            }
         }
+        $stmt->close();
     }
 }
 
@@ -28,26 +39,38 @@ function login($data)
 {
     global $conn;
 
-    $username = mysqli_real_escape_string($conn, $data['username']);
-    $password = mysqli_real_escape_string($conn, $data['password']);
+    $inputUsername = mysqli_real_escape_string($conn, $data['username']);
+    $inputPassword = mysqli_real_escape_string($conn, $data['password']);
 
-    $query = "SELECT * FROM accounts WHERE username = '$username'";
-    $account = $conn->query($query)->fetch_assoc();
+    $query = "SELECT * FROM accounts WHERE username = ?";
 
-    if ($account && password_verify($password, $account['password'])) {
-        session_start();
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("s", $inputUsername);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($id, $username, $password, $is_admin);
 
-        $_SESSION['id'] = $account['id'];
-        $_SESSION['username'] = $username;
-        $_SESSION['is_admin'] = $account['is_admin'];
-        $_SESSION['login'] = TRUE;
-        if ($_SESSION['is_admin']) {
-            header("Location: ../admin/index.php");
+        if ($stmt->num_rows) {
+            $stmt->fetch();
+            if (password_verify($inputPassword, $password)) {
+                session_start();
+
+                $_SESSION['id'] = $id;
+                $_SESSION['username'] = $username;
+                $_SESSION['is_admin'] = $is_admin;
+                $_SESSION['login'] = TRUE;
+                if ($_SESSION['is_admin']) {
+                    header("Location: ../admin/index.php");
+                } else {
+                    header("Location: ../index.php");
+                }
+            } else {
+                echo "<script>alert('Invalid username or password');</script>";
+            }
         } else {
-            header("Location: ../index.php");
+            echo "<script>alert('Invalid username or password');</script>";
         }
-    } else {
-        return "Invalid username or password";
+        $stmt->close();
     }
 }
 function logout()
@@ -56,3 +79,4 @@ function logout()
     session_destroy();
     header("Location: ../index.php");
 }
+

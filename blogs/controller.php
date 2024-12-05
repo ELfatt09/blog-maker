@@ -80,13 +80,14 @@ function delete($id)
 function getBlogsByAuthor($authorId)
 {
     global $conn;
-    $query = "SELECT b.id, b.judul, b.type, b.header_img_path, b.isi, b.created_at, a.username AS author_username
+    $id_escaped = escape($authorId);
+    $query = "SELECT b.id, b.judul, b.type, b.header_img_path, b.isi, b.created_at, b.author_id, a.username AS author_username
               FROM blog b
               JOIN accounts a ON b.author_id = a.id
               WHERE b.author_id = ?
               ORDER BY b.created_at DESC";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", escape($authorId));
+    $stmt->bind_param("i", $id_escaped);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->fetch_all(MYSQLI_ASSOC);
@@ -149,5 +150,17 @@ function deleteOldHeaderImage($id)
     if (!empty($header_img_path) || file_exists($header_img_path)) {
         unlink($header_img_path);
     }
+}
+function fetchSingleResult(string $query, array $params = []): ?array
+{
+    global $conn;
+    $stmt = $conn->prepare($query);
+    if ($params) {
+        $types = str_repeat('s', count($params));
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result ?: null;
 }
 

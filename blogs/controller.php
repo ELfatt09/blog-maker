@@ -8,11 +8,11 @@ function all($type = null)
               FROM blog b
               JOIN accounts a ON b.author_id = a.id";
     if (!is_null($type)) {
+        $escapedType = escape($type);
         $query .= " WHERE b.type = ?";
     }
     $query .= " ORDER BY b.created_at DESC";
     $stmt = $conn->prepare($query);
-    $escapedType = escape($type);
     if (!is_null($type)) {
         $stmt->bind_param("s", $escapedType);
     }
@@ -128,7 +128,7 @@ function validateAuthor($postId, $authorId)
     return $result['author_id'] === $authorId || $_SESSION['is_admin'];
 }
 
-function escape(string $string)
+function escape($string)
 {
     global $conn;
     return $conn->real_escape_string($string);

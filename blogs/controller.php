@@ -164,4 +164,3 @@ function fetchSingleResult(string $query, array $params = []): ?array
     $result = $stmt->get_result()->fetch_assoc();
     return $result ?: null;
 }
-

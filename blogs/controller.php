@@ -12,8 +12,9 @@ function all($type = null)
     }
     $query .= " ORDER BY b.created_at DESC";
     $stmt = $conn->prepare($query);
+    $escapedType = escape($type);
     if (!is_null($type)) {
-        $stmt->bind_param("s", escape($type));
+        $stmt->bind_param("s", $escapedType);
     }
     $stmt->execute();
     $result = $stmt->get_result();

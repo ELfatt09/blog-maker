@@ -1,6 +1,12 @@
 <?php
 require_once '../database/connection.php';
 
+function sanitizeInput($input)
+{
+    return htmlspecialchars($input, ENT_QUOTES);
+}
+
+
 function all($type = null)
 {
     global $conn;
@@ -8,7 +14,7 @@ function all($type = null)
               FROM blog b
               JOIN accounts a ON b.author_id = a.id";
     if (!is_null($type)) {
-        $escapedType = escape($type);
+        $escapedType = $type;
         $query .= " WHERE b.type = ?";
     }
     $query .= " ORDER BY b.created_at DESC";
@@ -29,11 +35,13 @@ function show($id)
               JOIN accounts a ON b.author_id = a.id
               WHERE b.id = ?";
     $stmt = $conn->prepare($query);
-    $id_escaped = escape($id);
+    $id_escaped = $id;
     $stmt->bind_param("i", $id_escaped);
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->fetch_assoc();
+    $data = $result->fetch_assoc();
+    $data['isi'] = sanitizeInput($data['isi']);
+    return $data;
 }
 
 function create(array $data)
@@ -42,7 +50,7 @@ function create(array $data)
     $query = "INSERT INTO blog (judul, header_img_path, type, isi, author_id) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($query);
     $header_img_path = $_FILES['image']['tmp_name'] ? getHeaderImgPath($_FILES) : null;
-    $stmt->bind_param("ssssi", escape($data['judul']), $header_img_path, escape($data['type']), escape($data['isi']), $_SESSION['id']);
+    $stmt->bind_param("ssssi", sanitizeInput($data['judul']), $header_img_path, sanitizeInput($data['type']), sanitizeInput($data['isi']), $_SESSION['id']);
     $stmt->execute();
     redirectToIndex();
 }
@@ -59,7 +67,7 @@ function update($data, $id)
         deleteOldHeaderImage($id);
     }
     $header_img_path = empty($_FILES['image']['tmp_name']) ? getHeaderImgPathById($id) : getHeaderImgPath($_FILES);
-    $stmt->bind_param("ssssi", escape($data['judul']), $header_img_path, escape($data['type']), escape($data['isi']), $id);
+    $stmt->bind_param("ssssi", sanitizeInput($data['judul']), $header_img_path, sanitizeInput($data['type']), sanitizeInput($data['isi']), $id);
     $stmt->execute();
     redirectToIndex();
 }
@@ -72,7 +80,7 @@ function delete($id)
     }
     $query = "DELETE FROM blog WHERE id = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", escape($id));
+    $stmt->bind_param("i", $id);
     deleteOldHeaderImage($id);
     $stmt->execute(); 
     redirectToIndex();
@@ -81,7 +89,7 @@ function delete($id)
 function getBlogsByAuthor($authorId)
 {
     global $conn;
-    $id_escaped = escape($authorId);
+    $id_escaped = $authorId;
     $query = "SELECT b.id, b.judul, b.type, b.header_img_path, b.isi, b.created_at, b.author_id, a.username AS author_username
               FROM blog b
               JOIN accounts a ON b.author_id = a.id
@@ -91,7 +99,11 @@ function getBlogsByAuthor($authorId)
     $stmt->bind_param("i", $id_escaped);
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->fetch_all(MYSQLI_ASSOC);
+    $resultArray = $result->fetch_all(MYSQLI_ASSOC);
+    foreach ($resultArray as &$row) {
+        $row['isi'] = sanitizeInput($row['isi']);
+    }
+    return $resultArray;
 }
 
 function getHeaderImgPath(array $image)
@@ -111,7 +123,7 @@ function getHeaderImgPathById($id)
     global $conn;
     $query = "SELECT header_img_path FROM blog WHERE id = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", escape($id));
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->fetch_assoc()['header_img_path'];
@@ -126,12 +138,6 @@ function validateAuthor($postId, $authorId)
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
     return $result['author_id'] === $authorId || $_SESSION['is_admin'];
-}
-
-function escape($string)
-{
-    global $conn;
-    return $conn->real_escape_string($string);
 }
 
 function redirectToIndex()
@@ -152,15 +158,18 @@ function deleteOldHeaderImage($id)
         unlink($header_img_path);
     }
 }
+
 function fetchSingleResult(string $query, array $params = []): ?array
 {
     global $conn;
     $stmt = $conn->prepare($query);
     if ($params) {
         $types = str_repeat('s', count($params));
-        $stmt->bind_param($types, ...$params);
+        $stmt->bind_param($types, ...array_map('sanitizeInput', $params));
     }
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
     return $result ?: null;
 }
+
+

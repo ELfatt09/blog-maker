@@ -41,16 +41,19 @@
                             <p class="text-gray-600 mb-4">
                                 <?= substr($blog['isi'], 0, 80) . '...' ?>
                             </p>
-                            <?php if (validateAuthor($blog['id'], $_SESSION['id'])) : ?>
-                                <div class="mt-4 flex space-x-2">
-                                    <a href="./form.php?update=<?= $blog['id'] ?>" class="font-semibold focus:shadow-outline">
+                            <div class="mt-4 flex space-x-2 text-sm font-semibold">
+                                <a href="./show.php?id=<?= $blog['id'] ?>" class="focus:shadow-outline hover:text-blue-500 transition duration-150 ease-in-out">
+                                    Read
+                                </a>
+                                <?php if (validateAuthor($blog['id'], $_SESSION['id'])) : ?>
+                                    <a href="./form.php?update=<?= $blog['id'] ?>" class="focus:shadow-outline hover:text-blue-500 transition duration-150 ease-in-out">
                                         Update
                                     </a>
-                                    <a href="./delete.php?id=<?= $blog['id'] ?>" class="font-semibold text-red-500 focus:shadow-outline">
+                                    <a href="./delete.php?id=<?= $blog['id'] ?>" class="focus:shadow-outline hover:text-red-700 transition duration-150 ease-in-out">
                                         Delete
                                     </a>
-                                </div>
-                            <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -39,11 +39,7 @@ if (isset($_GET['id'])) {
             By <strong class="text-gray-700"><?= $blog['author_username'] ?></strong>
         </div>
         <div class="px-5 w-full text-lg mx-auto">
-            <?php
-            foreach (array_filter(explode("\n", $blog['isi']), 'trim') as $paragraph) {
-                echo "<p class='my-5'>" . htmlspecialchars($paragraph) . "</p>";
-            }
-            ?>
+            <p class="border-b py-3"> <?=nl2br($blog['isi']) ?></p>
         </div>
     </div>
 </body>

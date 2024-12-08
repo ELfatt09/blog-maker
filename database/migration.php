@@ -18,6 +18,15 @@ $queries = [
         FOREIGN KEY (author_id) REFERENCES accounts(id),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )",
+    "CREATE TABLE IF NOT EXISTS comments (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        blog_id INT NOT NULL,
+        author_id INT NOT NULL,
+        comment TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (blog_id) REFERENCES blog(id),
+        FOREIGN KEY (author_id) REFERENCES accounts(id)
+    )"
 ];
 
 foreach ($queries as $query) {
@@ -27,12 +36,20 @@ foreach ($queries as $query) {
         echo "Error creating table: " . $conn->error . "\n";
     }
 }
-$query = "INSERT INTO accounts (username, password, is_admin) VALUES ('admin', '" . password_hash('admin123', PASSWORD_DEFAULT) . "', true) ON DUPLICATE KEY UPDATE is_admin = true";
-if ($conn->query($query)) {
+
+$stmt = $conn->prepare("INSERT INTO accounts (username, password, is_admin) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE is_admin = true");
+$username = 'admin';
+$password = password_hash('admin123', PASSWORD_DEFAULT);
+$is_admin = true;
+$stmt->bind_param('ssi', $username, $password, $is_admin);
+if ($stmt->execute()) {
     echo "Successfully make first user as admin\n
-    username: admin\n
-    password: admin123\n";
+    username: admin<br>
+    password: admin123<br>";
 } else {
-    echo "Error making first user as admin: " . $conn->error . "\n";
+    echo "Error making first user as admin: " . $stmt->error . "\n";
 }
+
+$stmt->close();
+$conn->close();
 

@@ -75,7 +75,7 @@ $blogs = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <?php } ?>
                                     <div>
                                         <h3 class="text-2xl font-semibold tracking-tight mb-4">
-                                            <a href="./show.php?id=<?= $blog['id'] ?>" class="hover:text-blue-500">
+                                            <a href="./blogs/show.php?id=<?= $blog['id'] ?>" class="hover:text-blue-500">
                                                 <?= $blog['judul'] ?>
                                             </a>
                                         </h3>
@@ -92,7 +92,7 @@ $blogs = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
                                                 By
                                             </p>
                                             <p class="text-sm">
-                                                <a href="./author.php?id=<?= $blog['author_id'] ?>" class="hover:text-blue-500">
+                                                <a href="./blogs/author.php?id=<?= $blog['author_id'] ?>" class="hover:text-blue-500">
                                                     <?= $blog['author_username'] ?>
                                                 </a>
                                             </p>

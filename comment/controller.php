@@ -22,14 +22,28 @@ function validateComment($comment)
     return !empty($comment);
 }
 
+function allComments()
+{
+    global $conn;
+    $query = "SELECT c.id, c.comment, c.created_at, c.blog_id, c.author_id, a.username AS author_username, b.judul AS blog_title
+              FROM comments c
+              JOIN accounts a ON c.author_id = a.id
+              JOIN blog b ON c.blog_id = b.id
+              ORDER BY c.created_at DESC";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 function showComments($blog_id)
 {
     global $conn;
-    $query = "SELECT c.id, c.comment, c.created_at, a.username AS author_username, a.id AS author_id
-              FROM comments c
-              JOIN accounts a ON c.author_id = a.id
-              WHERE c.blog_id = ?
-              ORDER BY c.created_at DESC";
+    $query = "SELECT c.id, c.comment, c.created_at, c.blog_id, c.author_id, a.username AS author_username, b.judul AS blog_title
+          FROM comments c
+          JOIN accounts a ON c.author_id = a.id
+          JOIN blog b ON c.blog_id = b.id
+          WHERE c.blog_id = ?
+          ORDER BY c.created_at DESC";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $blog_id);
     $stmt->execute();
@@ -54,7 +68,7 @@ function addComment($blog_id, $author_id, $comment)
     }
 }
 
-function deleteComment($comment_id, $blog_id)
+function deleteComment($comment_id)
 {
     global $conn;
     $query = "DELETE FROM comments WHERE id = ?";

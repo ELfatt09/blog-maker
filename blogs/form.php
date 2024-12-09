@@ -50,10 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option class="uppercase text-blue-600 font-bold tracking-widest" value="tutorial" <?= $selected == 'tutorial' ? 'selected' : '' ?>>tutorial</option>
                     <option class="uppercase text-blue-600 font-bold tracking-widest" value="berita" <?= $selected == 'berita' ? 'selected' : '' ?>>berita</option>
                     <option class="uppercase text-blue-600 font-bold tracking-widest" value="promosi" <?= $selected == 'promosi' ? 'selected' : '' ?>>promosi</option>
+                    <option class="uppercase text-blue-600 font-bold tracking-widest" value="review" <?= $selected == 'review' ? 'selected' : '' ?>>review</option>
+                    <option class="uppercase text-blue-600 font-bold tracking-widest" value="opini" <?= $selected == 'opini' ? 'selected' : '' ?>>opini</option>
+                    <option class="uppercase text-blue-600 font-bold tracking-widest" value="wawancara" <?= $selected == 'wawancara' ? 'selected' : '' ?>>wawancara</option>
                 </select>
             </div>
             <input class="first-letter:uppercase mx-5 w-full text-gray-800 text-5xl font-bold leading-none tracking-tight mb-4" type="text" name="judul" id="judul" placeholder="Blog Title..." value="<?= $blog['judul'] ?? '' ?>" required />
-            <input type="file" name="image" id="image" style="display: none;">
+            <input type="file" name="image" id="image" style="display: none;" accept="image/*">
             <label for="image">
                 <?php if (isset($blog['header_img_path'])): ?>
                     <img id="preview" src="<?= $blog['header_img_path'] ?>" alt="Preview Image" class="mx-5 cursor-pointer">

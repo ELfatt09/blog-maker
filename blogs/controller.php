@@ -110,6 +110,12 @@ function getHeaderImgPath(array $image)
 {
     $header_img_path = $image['image']['tmp_name'];
     $storage_dir = '../storage/';
+    $allowed_types = ['image/jpeg', 'image/png', 'image/bmp', 'image/webp', 'image/tiff', 'image/svg+xml'];
+    // Check if the file is an image
+    if (!in_array(mime_content_type($header_img_path), $allowed_types)) {
+        throw new Exception('File must be an image');
+    }
+
     if (!file_exists($storage_dir)) {
         mkdir($storage_dir, 0777, true);
     }

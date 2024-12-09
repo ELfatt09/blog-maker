@@ -4,7 +4,7 @@ include 'connection.php';
 $queries = [
     "CREATE TABLE IF NOT EXISTS accounts (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(255) NOT NULL,
+        username VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         is_admin BOOLEAN DEFAULT false
     )",
@@ -15,8 +15,8 @@ $queries = [
         header_img_path VARCHAR(255),
         isi TEXT NOT NULL,
         author_id INT NOT NULL,
-        FOREIGN KEY (author_id) REFERENCES accounts(id),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (author_id) REFERENCES accounts(id) ON DELETE CASCADE
     )",
     "CREATE TABLE IF NOT EXISTS comments (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,8 +24,8 @@ $queries = [
         author_id INT NOT NULL,
         comment TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (blog_id) REFERENCES blog(id),
-        FOREIGN KEY (author_id) REFERENCES accounts(id)
+        FOREIGN KEY (blog_id) REFERENCES blog(id) ON DELETE CASCADE,
+        FOREIGN KEY (author_id) REFERENCES accounts(id) ON DELETE CASCADE
     )"
 ];
 

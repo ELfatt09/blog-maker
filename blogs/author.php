@@ -34,7 +34,7 @@ $author = fetchSingleResult("SELECT id, username FROM accounts WHERE id =$author
                         <h2 class="font-bold text-3xl sm:text-4xl md:text-5xl text-dark mb-4">
                             <?= $author['username'] ?>'s Blogs
                         </h2>
-                        <hr class="border-t-4 border-blue-500 my-4">
+                        <hr class="border-t-4 border-emerald-500 my-4">
                     </div>
                 </div>
             </div>

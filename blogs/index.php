@@ -41,7 +41,7 @@ if (isset($_GET['type'])) {
                   uppercase">
                             <?= $judul ?>
                         </h2>
-                        <hr class="border-t-4 border-blue-500 my-4">
+                        <hr class="border-t-4 border-emerald-500 my-4">
                     </div>
                 </div>
             </div>

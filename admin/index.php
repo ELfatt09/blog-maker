@@ -50,7 +50,7 @@ $comments = allComments();
                   ">
                         Blogs Control Table
                     </h2>
-                    <hr class="border-t-4 border-blue-500 my-4">
+                    <hr class="border-t-4 border-emerald-500 my-4">
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@ $comments = allComments();
                                 <?= $blog['id'] ?>
                             </th>
                             <td class="px-6 py-4">
-                                <a href="../blogs/show.php?id=<?= $blog['id'] ?>" class="text-blue-700 hover:text-blue-900"><?= $blog['judul'] ?></a>
+                                <a href="../blogs/show.php?id=<?= $blog['id'] ?>" class="text-emerald-700 hover:text-emerald-900"><?= $blog['judul'] ?></a>
                             </td>
                             <td class="px-6 py-4">
                                 <?= $blog['type'] ?>
@@ -101,7 +101,7 @@ $comments = allComments();
                             </td>
                             <td class="px-6 py-4">
                                 <?php if ($blog['header_img_path'] !== null) : ?>
-                                    <a href="<?= $blog['header_img_path'] ?>" class="text-blue-700 hover:text-blue-900"><?= basename($blog['header_img_path']) ?></a>
+                                    <a href="<?= $blog['header_img_path'] ?>" class="text-emerald-700 hover:text-emerald-900"><?= basename($blog['header_img_path']) ?></a>
                                 <?php endif; ?>
                             </td>
                             <td class="px-6 py-4">
@@ -112,8 +112,8 @@ $comments = allComments();
                             </td>
                             <td class="px-6 py-4">
                                 <?php if (validateAuthor($blog['id'], $_SESSION['id'])) { ?>
-                                    <a href="../blogs/form.php?update=<?= $blog['id'] ?>" class="text-blue-700 hover:text-blue-900 hover:underline mr-4">update</a>
-                                    <a href="../blogs/delete.php?id=<?= $blog['id'] ?>" class="text-blue-700 hover:text-blue-900 hover:underline">delete</a>
+                                    <a href="../blogs/form.php?update=<?= $blog['id'] ?>" class="text-emerald-700 hover:text-emerald-900 hover:underline mr-4">update</a>
+                                    <a href="../blogs/delete.php?id=<?= $blog['id'] ?>" class="text-emerald-700 hover:text-emerald-900 hover:underline">delete</a>
                                 <?php } else { ?>
                                     <p class="text-gray-600">not authorized</p>
                                 <?php } ?>
@@ -136,7 +136,7 @@ $comments = allComments();
                   ">
                         User Control Table
                     </h2>
-                    <hr class="border-t-4 border-blue-500 my-4">
+                    <hr class="border-t-4 border-emerald-500 my-4">
                 </div>
             </div>
         </div>
@@ -172,10 +172,10 @@ $comments = allComments();
                             </td>
                             <td class="px-6 py-4">
                                 <?php if ($_SESSION['is_admin'] == 1 && $user['id'] != $_SESSION['id']) { ?>
-                                    <a href="?setorunsetadmin=<?= $user['id'] ?>" class="text-blue-700 hover:text-blue-900 hover:underline">
+                                    <a href="?setorunsetadmin=<?= $user['id'] ?>" class="text-emerald-700 hover:text-emerald-900 hover:underline">
                                         <?= $user['is_admin'] ? 'unset' : 'set' ?> admin
                                     </a>
-                                    <a href="?deleteUser=<?= $user['id'] ?>" class="text-blue-700 hover:text-blue-900 hover:underline ml-4">delete</a>
+                                    <a href="?deleteUser=<?= $user['id'] ?>" class="text-emerald-700 hover:text-emerald-900 hover:underline ml-4">delete</a>
                                 <?php } ?>
                             </td>
                         </tr>
@@ -196,7 +196,7 @@ $comments = allComments();
                   ">
                         Comments Control Table
                     </h2>
-                    <hr class="border-t-4 border-blue-500 my-4">
+                    <hr class="border-t-4 border-emerald-500 my-4">
                 </div>
             </div>
         </div>
@@ -228,10 +228,10 @@ $comments = allComments();
                                 <?= $comment['id'] ?>
                             </th>
                             <td class="px-6 py-4">
-                                <a href="../blogs/show.php?id=<?= $comment['blog_id'] ?>" class="text-blue-700 hover:text-blue-900"><?= htmlspecialchars($comment['blog_title'], ENT_QUOTES) ?></a>
+                                <a href="../blogs/show.php?id=<?= $comment['blog_id'] ?>" class="text-emerald-700 hover:text-emerald-900"><?= htmlspecialchars($comment['blog_title'], ENT_QUOTES) ?></a>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="../blogs/author.php?id=<?= $comment['author_id'] ?>" class="text-blue-700 hover:text-blue-900">
+                                <a href="../blogs/author.php?id=<?= $comment['author_id'] ?>" class="text-emerald-700 hover:text-emerald-900">
                                     <?= htmlspecialchars($comment['author_username'], ENT_QUOTES) ?>
                                 </a>
                             </td>
@@ -240,7 +240,7 @@ $comments = allComments();
                             </td>
                             <td class="px-6 py-4 flex items-center">
                                 <?php if ($_SESSION['is_admin'] == 1 || $comment['author_id'] == $_SESSION['id']) { ?>
-                                    <a href="?deleteComment=<?= $comment['id'] ?>" class="text-blue-700 hover:text-blue-900 hover:underline">
+                                    <a href="?deleteComment=<?= $comment['id'] ?>" class="text-emerald-700 hover:text-emerald-900 hover:underline">
                                         delete
                                     </a>
                                 <?php } ?>

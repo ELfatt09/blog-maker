@@ -22,17 +22,17 @@ $blogs = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
     <section class="py-24 flex items-center min-h-screen justify-center bg-white">
         <div class="mx-auto max-w-[43rem] md:max-w-[600px] lg:max-w-[800px]">
             <div class="text-center">
-                <p class="text-lg font-medium leading-8 text-blue-600/95">Introducing Modern blog maker</p>
+                <p class="text-lg font-medium leading-8 text-emerald-600/95">Introducing Modern blog maker</p>
                 <h1 class="mt-3 text-[3.5rem] md:text-[4.5rem] font-bold leading-[4rem] tracking-tight text-black">Change your mind into blog</h1>
-                <p class=" text-lg leading-relaxed text-slate-400 mt-5">Think, Type, <b class="text-blue-600/95">Publish!!</b></p>
+                <p class=" text-lg leading-relaxed text-slate-400 mt-5">Think, Type, <b class="text-emerald-600/95">Publish!!</b></p>
             </div>
 
             <div class="mt-6 flex items-center justify-center gap-4">
                 <?php if (!isset($_SESSION['login'])) : ?>
-                    <a href="./auth/register.php" class="px-5 py-3 text-center bg-blue-600 text-white rounded-md hover:bg-transparent hover:text-blue-600 hover:border-2 hover:border-blue-600">Register Now</a>
+                    <a href="./auth/register.php" class="px-5 py-3 text-center bg-emerald-600 text-white rounded-md hover:bg-transparent hover:text-emerald-600 hover:border-2 hover:border-emerald-600">Register Now</a>
                     <a href="./auth/login.php" class="transform rounded-md border border-slate-200 px-5 py-3 font-medium text-slate-900 transition-colors hover:bg-slate-50"> Login </a>
                 <?php else : ?>
-                    <a href="./blogs/form.php" class="px-5 py-3 text-center bg-blue-600 text-white rounded-md hover:bg-transparent hover:text-blue-600 hover:border-2 hover:border-blue-600">Create your blog now</a>
+                    <a href="./blogs/form.php" class="px-5 py-3 text-center bg-emerald-600 text-white rounded-md hover:bg-transparent hover:text-emerald-600 hover:border-2 hover:border-emerald-600">Create your blog now</a>
                     <a href="./blogs/index.php" class="transform rounded-md border border-slate-200 px-5 py-3 font-medium text-slate-900 transition-colors hover:bg-slate-50"> Read now </a>
                 <?php endif; ?>
             </div>
@@ -45,7 +45,7 @@ $blogs = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
             <div class="flex flex-wrap justify-center -mx-4">
                 <div class="w-full px-4">
                     <div class="text-center mx-auto mb-[60px] lg:mb-20 max-w-[510px]">
-                        <span class="font-semibold text-lg text-blue-500 mb-2 block">
+                        <span class="font-semibold text-lg text-emerald-500 mb-2 block">
                             Our Blogs
                         </span>
                         <h2
@@ -75,7 +75,7 @@ $blogs = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <?php } ?>
                                     <div>
                                         <h3 class="text-2xl font-semibold tracking-tight mb-4">
-                                            <a href="./blogs/show.php?id=<?= $blog['id'] ?>" class="hover:text-blue-500">
+                                            <a href="./blogs/show.php?id=<?= $blog['id'] ?>" class="hover:text-emerald-500">
                                                 <?= $blog['judul'] ?>
                                             </a>
                                         </h3>
@@ -92,7 +92,7 @@ $blogs = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
                                                 By
                                             </p>
                                             <p class="text-sm">
-                                                <a href="./blogs/author.php?id=<?= $blog['author_id'] ?>" class="hover:text-blue-500">
+                                                <a href="./blogs/author.php?id=<?= $blog['author_id'] ?>" class="hover:text-emerald-500">
                                                     <?= $blog['author_username'] ?>
                                                 </a>
                                             </p>

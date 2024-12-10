@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="w-full md:w-2/5 mx-auto">
         <div class="mx-5 my-3 text-sm">
-            <a href="./index.php?category=<?= $blog['type'] ?>" class="uppercase text-blue-600 font-bold tracking-widest"><?= $blog['type'] ?></a>
+            <a href="./index.php?category=<?= $blog['type'] ?>" class="uppercase text-emerald-600 font-bold tracking-widest"><?= $blog['type'] ?></a>
         </div>
 
         <div class="first-letter:uppercase w-full text-gray-800 text-5xl px-5 font-bold leading-none tracking-tight mb-4">
@@ -84,16 +84,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <textarea placeholder="comment" class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="comment"></textarea>
                     </div>
                     <div class="flex justify-end px-4">
-                        <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-blue-500 hover:bg-blue-600 focus:outline-none" value="Comment">
+                        <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-emerald-500 hover:bg-emerald-600 focus:outline-none" value="Comment">
                     </div>
                 </form>
             <?php } else { ?>
-                <p class="text-center text-gray-700 mt-10">You must <a href="../auth/login.php" class="text-blue-500 hover:text-blue-700">login</a> first to write a comment</p>
+                <p class="text-center text-gray-700 mt-10">You must <a href="../auth/login.php" class="text-emerald-500 hover:text-emerald-700">login</a> first to write a comment</p>
             <?php }
             foreach ($comments as $comment): ?>
                 <div class="border rounded-md p-5 ml-3 my-3">
                     <div class="flex gap-3 items-center">
-                        <a href="./author.php?id=<?= $comment['author_id'] ?>" class="text-md text-gray-900 hover:text-blue-600">
+                        <a href="./author.php?id=<?= $comment['author_id'] ?>" class="text-md text-gray-900 hover:text-emerald-600">
                             <h3 class="font-bold text-lg">
                                 - <?= $comment['author_username'] ?>
                             </h3>

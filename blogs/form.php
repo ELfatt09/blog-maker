@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option class="uppercase text-blue-600 font-bold tracking-widest" value="wawancara" <?= $selected == 'wawancara' ? 'selected' : '' ?>>wawancara</option>
                 </select>
             </div>
-            <input class="first-letter:uppercase mx-5 w-full text-gray-800 text-5xl font-bold leading-none tracking-tight mb-4" type="text" name="judul" id="judul" placeholder="Blog Title..." value="<?= $blog['judul'] ?? '' ?>" required />
+            <input class="first-letter:uppercase mx-5 w-full text-gray-800 text-5xl font-bold leading-none tracking-tight mb-4 order-b-2 border-gray-300 focus:outline-none focus:border-blue-600 " type="text" name="judul" id="judul" placeholder="Blog Title..." value="<?= $blog['judul'] ?? '' ?>" required />
             <input type="file" name="image" id="image" style="display: none;" accept="image/*">
             <label for="image">
                 <?php if (isset($blog['header_img_path'])): ?>

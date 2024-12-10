@@ -29,10 +29,10 @@ $blogs = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
 
             <div class="mt-6 flex items-center justify-center gap-4">
                 <?php if (!isset($_SESSION['login'])) : ?>
-                    <a href="./auth/register.php" class="transform rounded-md bg-blue-600/95 px-5 py-3 font-medium text-white transition-colors hover:bg-blue-700">Register Now</a>
+                    <a href="./auth/register.php" class="px-5 py-3 text-center bg-blue-600 text-white rounded-md hover:bg-transparent hover:text-blue-600 hover:border-2 hover:border-blue-600">Register Now</a>
                     <a href="./auth/login.php" class="transform rounded-md border border-slate-200 px-5 py-3 font-medium text-slate-900 transition-colors hover:bg-slate-50"> Login </a>
                 <?php else : ?>
-                    <a href="./blogs/form.php" class="transform rounded-md bg-blue-600/95 px-5 py-3 font-medium text-white transition-colors hover:bg-blue-700">Create your blog now</a>
+                    <a href="./blogs/form.php" class="px-5 py-3 text-center bg-blue-600 text-white rounded-md hover:bg-transparent hover:text-blue-600 hover:border-2 hover:border-blue-600">Create your blog now</a>
                     <a href="./blogs/index.php" class="transform rounded-md border border-slate-200 px-5 py-3 font-medium text-slate-900 transition-colors hover:bg-slate-50"> Read now </a>
                 <?php endif; ?>
             </div>

@@ -4,7 +4,7 @@
     <?php else : ?>
         <?php foreach ($blogs as $blog) : ?>
             <div class="w-full sm:w-1/2 lg:w-1/3 px-4 mb-6">
-                <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="bg-white rounded-lg border-2 p-6">
                     <a href="./index.php?type=<?= $blog['type'] ?>">
                         <h5 class="text-sm uppercase font-bold tracking-widest text-blue-500 mb-2"><?= $blog['type'] ?></h5>
                     </a>
